@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+/* ===== Body ===== */
+body{
+  margin:0;
+  font-family: 'Montserrat', sans-serif;
+  background:#f5f7fb;
+}
+
+/* ===== App Container ===== */
+.app-container{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  /* border: 1px solid red; */
+}
+
+/* ===== Task Card ===== */
+.task-card{
+  width:700px;
+  background:white;
+  padding:30px;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+  /* border: 1px solid blue; */
+
+}
+
+/* ===== Header ===== */
+.header{
+  text-align:center;
+  margin-bottom:25px;
+}
+
+.header h1{
+  margin:0;
+  font-size:28px;
+  color:#111827;
+}
+
+.header .subtitle{
+  margin-top:5px;
+  font-size:14px;
+  color:#6b7280;
+}
+
+/* ===== Task Input ===== */
+.task-input{
+  display:flex;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.task-input input{
+  flex:1;
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:5px;
+}
+
+.task-input button{
+  padding:10px 16px;
+  border:none;
+  background:#4f46e5;
+  color:white;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+.task-input button:hover{
+  background:#4338ca;
+}
+
+/* ===== Task Item ===== */
+.task-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#f9fafb;
+  padding:10px 14px;
+  border-radius:6px;
+  margin-bottom:10px;
+  transition: all 0.2s ease;
+}
+
+.task-item:hover{
+  transform: translateY(-2px);
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);
+}
+
+.task-counter{
+  text-align:center;
+  font-size:14px;
+  color:#4b5563;
+  margin-bottom:15px;
+}
+
+.task-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.completed-task{
+  text-decoration: line-through;
+  color:#9ca3af;
+}
+
+/* ===== Delete Button ===== */
+.delete-btn{
+  background:#ef4444;
+  color:white;
+  border:none;
+  padding:6px 10px;
+  border-radius:4px;
+  cursor:pointer;
+  transition: all 0.2s ease;
+}
+
+.delete-btn:hover{
+  background:#dc2626;
+}
