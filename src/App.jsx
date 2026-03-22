@@ -3,10 +3,17 @@ import { useState } from "react";
 import Header from "./components/Header";
 import TaskInput from "./components/TaskInput";
 import TaskList from "./components/TaskList";
+import { 
+    FaClipboardList, FaTasks, FaCheckCircle, FaHourglassHalf, 
+    FaChartPie, FaCog, FaMoon, FaSun,
+ } from "react-icons/fa";
 
 function App() {
 
   const [tasks, setTasks] = useState([]);
+  const [filter, setFilter] = useState("all");
+  const [activeNav, setActiveNav] = useState("dashboard");
+  const [darkMode, setDarkMode] = useState(false);
 
   // Add a task
   function addTask(taskText){
@@ -14,7 +21,8 @@ function App() {
     if(taskText.trim() === "") return;
     const newTask = {
       id: Date.now(),
-      text: taskText
+      text: taskText,
+      completed: false,
     };
   setTasks([...tasks, newTask]);
 
@@ -32,29 +40,149 @@ function App() {
     ));
 }
 
+  const completedTasks = tasks.filter((task) => task.completed).length;
+  const pendingTasks = tasks.filter((task) => !task.completed).length;
+
+  // Filter tasks based on the selected filter
+  const filteredTasks = tasks.filter(task => {
+    if(filter === "completed") return task.completed;
+    if(filter === "pending") return !task.completed;
+    return true; // for "all"
+  });
+  
+  //* Handle navigation click and set active state
+  function handleNavClick(section) {
+    setActiveNav(section);
+
+    if (section === "dashboard" || section === "all") {
+      setFilter("all");
+    }
+
+    if (section === "completed") {
+      setFilter("completed");
+    }
+
+    if (section === "pending") {
+      setFilter("pending");
+    }
+}
+
 return (
 
-  <div className="app-container">
-    <div className="task-card">
+    <div className={darkMode ? "dashboard-layout dark-mode" : "dashboard-layout"}>
+      <aside className="sidebar">
+        <div className="sidebar-logo">
+          <h2>TaskFlow</h2>
+          <p>Workspace</p>
+        </div>
 
+        <nav className="sidebar-nav">
+          <button
+            className={activeNav === "dashboard" ? "nav-item active-nav" : "nav-item"}
+            onClick={() => handleNavClick("dashboard")}
+          >
+            <FaChartPie className="nav-icon" />
+            Dashboard
+          </button>
+
+          <button
+            className={activeNav === "all" ? "nav-item active-nav" : "nav-item"}
+            onClick={() => handleNavClick("all")}
+          >
+            <FaClipboardList className="nav-icon" />
+            All Tasks
+          </button>
+
+          <button
+            className={activeNav === "completed" ? "nav-item active-nav" : "nav-item"}
+            onClick={() => handleNavClick("completed")}
+          >
+            <FaCheckCircle className="nav-icon" />
+            Completed
+          </button>
+
+          <button
+            className={activeNav === "pending" ? "nav-item active-nav" : "nav-item"}
+            onClick={() => handleNavClick("pending")}
+          >
+            <FaHourglassHalf className="nav-icon" />
+            Pending
+          </button>
+
+          <button
+            className={activeNav === "settings" ? "nav-item active-nav" : "nav-item"}
+            onClick={() => handleNavClick("settings")}
+          >
+            <FaCog className="nav-icon" />
+            Settings
+          </button>
+        </nav>
+
+        <button className="theme-toggle" onClick={() => setDarkMode(!darkMode)}>
+          {darkMode ? <FaSun className="nav-icon" /> : <FaMoon className="nav-icon" />}
+          {darkMode ? "Light Mode" : "Dark Mode"}
+        </button>
+      </aside>
+
+      <main className="main-content">
+        <div className="task-card">
           <Header />
 
-          <p className="task-counter">
-            Total: {tasks.length} | Completed: {tasks.filter(t=>t.completed).length}
-          </p>
+          <div className="stats-container">
+            <div className="stat-card">
+              <FaTasks className="stat-icon" />
+              <h3>Total Tasks</h3>
+              <p>{tasks.length}</p>
+            </div>
+
+            <div className="stat-card">
+              <FaCheckCircle className="stat-icon" />
+              <h3>Completed</h3>
+              <p>{completedTasks}</p>
+            </div>
+
+            <div className="stat-card">
+              <FaHourglassHalf className="stat-icon" />
+              <h3>Pending</h3>
+              <p>{pendingTasks}</p>
+            </div>
+          </div>
 
           <TaskInput addTask={addTask} />
-          <TaskList 
-            tasks={tasks} 
-            deleteTask={deleteTask} 
-            toggleTask={toggleTask} 
+
+          <div className="filter-buttons">
+            <button
+              className={filter === "all" ? "filter-btn active-filter" : "filter-btn"}
+              onClick={() => setFilter("all")}
+            >
+              All
+            </button>
+
+            <button
+              className={filter === "completed" ? "filter-btn active-filter" : "filter-btn"}
+              onClick={() => setFilter("completed")}
+            >
+              Completed
+            </button>
+
+            <button
+              className={filter === "pending" ? "filter-btn active-filter" : "filter-btn"}
+              onClick={() => setFilter("pending")}
+            >
+              Pending
+            </button>
+          </div>
+
+          <TaskList
+            tasks={filteredTasks}
+            deleteTask={deleteTask}
+            toggleTask={toggleTask}
+            darkMode={darkMode}
           />
-
+        </div>
+      </main>
     </div>
-  </div>
-
-);
-
+  );
 }
 
 export default App;

@@ -1,8 +1,8 @@
-function TaskItem({task, deleteTask, toggleTask}){
+function TaskItem({task, deleteTask, toggleTask, darkMode}){
 
     return(
 
-        <li className="task-item">
+        <li className={darkMode ? "task-item task-animate dark-task-item" : "task-item task-animate"}>
 
             <div className="task-left">
                 <input
