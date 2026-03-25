@@ -2,7 +2,7 @@ function TaskItem({task, deleteTask, toggleTask, darkMode}){
 
     return(
 
-        <li className={darkMode ? "task-item task-animate dark-task-item" : "task-item task-animate"}>
+        <div className={darkMode ? "task-item task-animate dark-task-item" : "task-item task-animate"}>
 
             <div className="task-left">
                 <input
@@ -10,7 +10,17 @@ function TaskItem({task, deleteTask, toggleTask, darkMode}){
                     checked={task.completed}
                     onChange={() => toggleTask(task.id)}
                 />
-                <span className={task.completed ? "completed-task" : ""}>
+                <span 
+                    className={task.completed 
+                        ? darkMode 
+                            ? "task-text completed-task dark-completed-task" 
+                            : "task-text completed-task" 
+                        : darkMode
+                            ? "task-text dark-task-text"
+                            : "task-text"
+                    }
+                
+                >
                     {task.text}
                 </span>
             </div>
@@ -21,7 +31,7 @@ function TaskItem({task, deleteTask, toggleTask, darkMode}){
                 Delete
             </button>
 
-        </li>
+        </div>
 
     );
 
