@@ -181,7 +181,7 @@ return (
 
       <main className="main-content">
         <div className="task-card fade-in">
-          {activeNav  === "settings" ? ( 
+          {activeNav  === "settings" ? (
             <div className="settings-panel">
               <div className="settings-header">
                 <h2>Settings</h2>
